@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
     TextView fajrText, dhuhrText, asrText, maghribText, ishaText;
 
-    String fajr, dhuhr, asr, maghrib, isha;
-
     String url = "http://muslimsalat.com/london/daily.json?key=dd6bc23f9b9671d19711e79cb573302e";
 
 
@@ -105,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
         maghribText = (TextView) findViewById(R.id.maghribStartTime);
         ishaText = (TextView) findViewById(R.id.ishaStartTime);
 
-        sendjsonrequest();
+        PrayerTimings prayerTimings = new PrayerTimings();
+        prayerTimings.sendjsonrequest(url,rq,fajrText,dhuhrText,asrText,maghribText,ishaText,getApplicationContext());
 
     }
 
@@ -128,48 +127,5 @@ public class MainActivity extends AppCompatActivity {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-    }
-
-    public void sendjsonrequest() {
-
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                try {
-                    JSONArray array = response.getJSONArray("items");
-                    JSONObject object = array.getJSONObject(0);
-                    fajr = object.getString("fajr");
-                    dhuhr = object.getString("dhuhr");
-                    asr = object.getString("asr");
-                    maghrib = object.getString("maghrib");
-                    isha = object.getString("isha");
-
-                    fajrText.setText(fajr);
-                    dhuhrText.setText(dhuhr);
-                    asrText.setText(asr);
-                    maghribText.setText(maghrib);
-                    ishaText.setText(isha);
-
-                    Log.d("TAG",fajr+dhuhr+asr+maghrib+isha);
-
-                } catch (JSONException e) {
-                    Log.d("TAG", e.toString());
-                    e.printStackTrace();
-                }
-
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Log.d("TAG",error.getMessage());
-                        Toast.makeText(getApplicationContext(), error.getMessage().toString() ,Toast.LENGTH_LONG).show();
-                    }
-                });
-
-        rq.add(request);
-
     }
 }
