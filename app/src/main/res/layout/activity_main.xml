@@ -31,28 +31,20 @@
         android:autoStart="true"
         android:background="@android:color/transparent"
         android:padding="@dimen/activity_horizontal_margin"
-        android:paddingBottom="10dp" >
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/clouds"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/locationTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="60dp"
-            android:text="Location"
-            android:textAppearance="@android:style/TextAppearance.Large"
-            android:textColor="@android:color/white"
-            tools:ignore="HardcodedText,RtlHardcoded" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:text="Weather"
-            android:textAppearance="@android:style/TextAppearance.Large"
-            android:textColor="@android:color/white"
+            android:textStyle="italic"
             tools:ignore="HardcodedText" />
 
     </ViewFlipper>
@@ -246,7 +238,7 @@
                 android:id="@+id/maghribEndTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
                 android:inputType="time"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"

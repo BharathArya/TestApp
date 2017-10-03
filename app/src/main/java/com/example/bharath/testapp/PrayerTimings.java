@@ -65,7 +65,11 @@ public class PrayerTimings {
                 });
 
         rq.add(request);
+    }
 
+    public  boolean check(boolean isChecked){
+        isChecked = true;
+        return isChecked;
     }
 
 }

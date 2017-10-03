@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView fajrText, dhuhrText, asrText, maghribText, ishaText;
 
-    String url = "http://muslimsalat.com/london/daily.json?key=dd6bc23f9b9671d19711e79cb573302e";
+    String loc, url;
 
 
     @Override
@@ -46,18 +46,24 @@ public class MainActivity extends AppCompatActivity {
 
         rq = Volley.newRequestQueue(this);
 
+        final GetMyLocation getMyLocation = new GetMyLocation();
+
         try {
 
             LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
             if (location != null) {
-                showMyAddress(location);
+                TextView locationTextView = (TextView) findViewById(R.id.locationTextView);
+                loc = getMyLocation.showMyAddress(location, getApplicationContext());
+                locationTextView.setText(loc);
             }
 
             final LocationListener locationListener = new LocationListener() {
                 public void onLocationChanged(Location location) {
-                    showMyAddress(location);
+                    TextView locationTextView = (TextView) findViewById(R.id.locationTextView);
+                   loc = getMyLocation.showMyAddress(location, getApplicationContext());
+                    locationTextView.setText(loc);
                 }
 
                 public void onProviderDisabled(String arg0) {
@@ -77,20 +83,9 @@ public class MainActivity extends AppCompatActivity {
             };
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-
-            // Also declare a private method
-
-
 
         }catch (Exception e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -103,29 +98,11 @@ public class MainActivity extends AppCompatActivity {
         maghribText = (TextView) findViewById(R.id.maghribStartTime);
         ishaText = (TextView) findViewById(R.id.ishaStartTime);
 
+        url = "http://muslimsalat.com/"+loc.toLowerCase()+"/daily.json?key=dd6bc23f9b9671d19711e79cb573302e";
+
         PrayerTimings prayerTimings = new PrayerTimings();
-        prayerTimings.sendjsonrequest(url,rq,fajrText,dhuhrText,asrText,maghribText,ishaText,getApplicationContext());
+        prayerTimings.sendjsonrequest(url, rq, fajrText,dhuhrText,asrText,maghribText,ishaText,getApplicationContext());
 
     }
 
-    private void showMyAddress(Location location) {
-        Toast.makeText(this, "Accessing showMyAddress function..", Toast.LENGTH_LONG).show();
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
-        Geocoder myLocation = new Geocoder(getApplicationContext(), Locale.getDefault());
-        List<Address> myList;
-        try {
-            myList = myLocation.getFromLocation(latitude, longitude, 1);
-            if(myList.size() == 1) {
-                //String loc;
-                //TextView loactionTextView = (TextView) findViewById(R.id.locationTextView);
-                //loc = myList.get(0).getAdminArea();
-                //loactionTextView.setText(loc);
-                Toast.makeText(this, myList.get(0).toString(), Toast.LENGTH_LONG).show();
-            }
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-    }
 }
