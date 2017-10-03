@@ -30,7 +30,7 @@ public class GetMyLocation extends MainActivity {
             if(myList.size() == 1) {
 
 
-                loc = String.valueOf(myList.get(0).getSubAdminArea());
+                loc = String.valueOf(myList.get(0).getAdminArea());
 
                 //Toast.makeText(this, myList.get(0).toString(), Toast.LENGTH_LONG).show();
             }
