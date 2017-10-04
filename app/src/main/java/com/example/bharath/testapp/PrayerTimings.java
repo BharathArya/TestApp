@@ -1,6 +1,8 @@
 package com.example.bharath.testapp;
 
 import android.content.Context;
+import android.media.AudioManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,11 +17,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.Format;
+import java.util.Calendar;
+
 /**
  * Created by Bharath on 03-10-2017.
  */
 
-public class PrayerTimings {
+public class PrayerTimings extends AppCompatActivity{
 
     String fajr, dhuhr, asr, maghrib, isha;
 
@@ -66,10 +71,4 @@ public class PrayerTimings {
 
         rq.add(request);
     }
-
-    public  boolean check(boolean isChecked){
-        isChecked = true;
-        return isChecked;
-    }
-
 }
