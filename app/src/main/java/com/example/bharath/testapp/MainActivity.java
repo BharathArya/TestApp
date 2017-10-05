@@ -132,10 +132,6 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(String result) {
                 SetMode setMode = new SetMode();
                 setMode.setMode(res,result,finalCurrentTime,audioManager);
-                /*res.setText(result.toString());
-                if(finalCurrentTime.equals(res.getText().toString())){
-                    audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-                }*/
             }
         });
     }
