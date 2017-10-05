@@ -11,12 +11,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.text.Format;
 import java.util.Calendar;
@@ -86,18 +87,22 @@ public class MainActivity extends AppCompatActivity {
         maghribText = (TextView) findViewById(R.id.maghribStartTime);
         ishaText = (TextView) findViewById(R.id.ishaStartTime);
 
+        final TextView res = (TextView)findViewById(R.id.time);
+
         url = "http://muslimsalat.com/"+loc+"/daily.json?key=dd6bc23f9b9671d19711e79cb573302e";
 
         PrayerTimings prayerTimings = new PrayerTimings();
-        prayerTimings.sendjsonrequest(url, rq, fajrText,dhuhrText,asrText,maghribText,ishaText,getApplicationContext());
+
+
+        //Toast.makeText(this, res.getText().toString() ,Toast.LENGTH_LONG).show();
 
         Calendar testDate = Calendar.getInstance();
         Format format = android.text.format.DateFormat.getTimeFormat(getApplicationContext());
         String currentTime = format.format(testDate.getTime());
 
-        TextView curTime;
-        curTime = (TextView)findViewById(R.id.time);
-        curTime.setText(currentTime);
+        currentTime = currentTime.substring(0,Math.min(currentTime.length(),4));
+
+
 
         final AudioManager audioManager = (AudioManager) getSystemService(getApplicationContext().AUDIO_SERVICE);
 
@@ -121,6 +126,19 @@ public class MainActivity extends AppCompatActivity {
                 audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
             }
         });
+
+        final String finalCurrentTime = currentTime;
+        prayerTimings.sendjsonrequest(url, rq, fajrText,dhuhrText,asrText,maghribText,ishaText,getApplicationContext(), new ServerCallback() {
+            @Override
+            public void onSuccess(String result) {
+                res.setText(result.toString());
+                if(finalCurrentTime.equals(res.getText().toString())){
+                    audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                }
+            }
+        });
+
+
     }
 
 }
