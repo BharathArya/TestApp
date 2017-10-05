@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONObject;
 
 import java.text.Format;
 import java.util.Calendar;
@@ -137,8 +136,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
 }
