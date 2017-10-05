@@ -130,10 +130,12 @@ public class MainActivity extends AppCompatActivity {
         prayerTimings.sendjsonrequest(url, rq, fajrText,dhuhrText,asrText,maghribText,ishaText,getApplicationContext(), new ServerCallback() {
             @Override
             public void onSuccess(String result) {
-                res.setText(result.toString());
+                SetMode setMode = new SetMode();
+                setMode.setMode(res,result,finalCurrentTime,audioManager);
+                /*res.setText(result.toString());
                 if(finalCurrentTime.equals(res.getText().toString())){
                     audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
-                }
+                }*/
             }
         });
     }
