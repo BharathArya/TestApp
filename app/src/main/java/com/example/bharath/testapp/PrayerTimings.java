@@ -23,6 +23,7 @@ import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Bharath on 03-10-2017.
@@ -53,9 +54,14 @@ public  class PrayerTimings extends MainActivity{
                     maghrib = object.getString("maghrib");
                     isha = object.getString("isha");
 
-                    fajr = fajr.substring(0,Math.min(fajr.length(), 4));
+                    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+                    Date fajrTime = sdf.parse(fajr);
+                    Date dhuhrTime = sdf.parse(dhuhr);
+                    Date asrTime = sdf.parse(asr);
+                    Date maghribTime = sdf.parse(maghrib);
+                    Date ishaTime = sdf.parse(isha);
 
-                    serverCallback.onSuccess(fajr);
+                    serverCallback.onSuccess(fajrTime, dhuhrTime, asrTime, maghribTime, ishaTime);
 
                     Toast.makeText(context, fajr, Toast.LENGTH_SHORT).show();
 
@@ -70,6 +76,8 @@ public  class PrayerTimings extends MainActivity{
                 } catch (JSONException e) {
                     Log.d("TAG", e.toString());
                     e.printStackTrace();
+                } catch (ParseException e) {
+                    Toast.makeText(PrayerTimings.this, "Couldnot parse time", Toast.LENGTH_LONG).show();
                 }
 
             }

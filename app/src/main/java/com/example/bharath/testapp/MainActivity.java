@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 
 import java.text.Format;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -129,9 +130,9 @@ public class MainActivity extends AppCompatActivity {
         final String finalCurrentTime = currentTime;
         prayerTimings.sendjsonrequest(url, rq, fajrText,dhuhrText,asrText,maghribText,ishaText,getApplicationContext(), new ServerCallback() {
             @Override
-            public void onSuccess(String result) {
-                SetMode setMode = new SetMode();
-                setMode.setMode(res,result,finalCurrentTime,audioManager);
+            public void onSuccess(Date fajrtime, Date dhuhrTime, Date asrTime, Date maghribTime, Date ishaTime) {
+                dataBase dataBase = new dataBase();
+                dataBase.database(fajrtime, dhuhrTime, asrTime, maghribTime, ishaTime);
             }
         });
     }
